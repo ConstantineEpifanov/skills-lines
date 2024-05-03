@@ -2,8 +2,9 @@
 
 import styles from './styles.module.scss';
 import CircleItem from '../CircleItem';
+import { memo } from 'react';
 
-export const CircleLayout = ({ items, blockColor, children }: any) => {
+export const CircleLayout = memo(({ items, blockColor, children }: any) => {
   const blockWidth = 30; // Ширина блока
 
   const numberOfBlocks = items.length; // Количество блоков
@@ -32,6 +33,6 @@ export const CircleLayout = ({ items, blockColor, children }: any) => {
       {children}
     </div>
   );
-};
+});
 
 export default CircleLayout;
