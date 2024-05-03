@@ -1,6 +1,7 @@
 $peach: hsla(29, 100%, 84%, 1);
 $grey: hsla(0, 0%, 68%, 1);
 $green: hsla(162, 100%, 32%, 1);
+$orange: hsla(29, 100%, 50%, 1);
 
 .block {
   position: absolute;
@@ -26,6 +27,9 @@ $green: hsla(162, 100%, 32%, 1);
   }
   &[data-tag='green'] {
     background-color: $green;
+  }
+  &[data-tag='orange'] {
+    background-color: $orange;
   }
 
   &:hover,

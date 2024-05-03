@@ -50,12 +50,10 @@ export default function CircleItem({
 
   const defineDataTag = () => {
     switch (active || chosen || undefined) {
-      case active && chosen:
-        return 'grey';
       case active:
         return 'green';
       case chosen:
-        return 'peach';
+        return 'orange';
       default:
         return blockColor;
     }
@@ -75,7 +73,10 @@ export default function CircleItem({
 
   useEffect(() => {
     if (block.mainSkills?.includes(text) || block.otherSkills?.includes(text)) {
+      console.log(text);
       setChosen(true);
+    } else {
+      setChosen(false);
     }
   }, [text, block]);
 

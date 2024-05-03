@@ -10,6 +10,8 @@ export default function OuterCircle() {
   const { setActiveChildren } = useActions();
   // Cелектор для получения активного блока из состояния
   const activeBlockName = useAppSelector(state => state.block.name);
+  const block = useAppSelector(state => state.block);
+  // const names = useMemo(() => SKILLS.map(item => item.name), []);
   const allUniqueSkills = useMemo(
     () =>
       Array.from(
@@ -23,22 +25,14 @@ export default function OuterCircle() {
     [],
   );
 
-  const itemsForActiveBlock = activeBlockName
-    ? SKILLS.filter(item => item.name === activeBlockName).flatMap(item => [
-        ...item.mainSkills,
-        ...item.otherSkills,
-      ])
-    : [];
-
-  // const sortedSkills = useMemo(() => {
-  //   const skillsSet = new Set(itemsForActiveBlock);
-  //   return [
-  //     ...itemsForActiveBlock,
-  //     ...allUniqueSkills.filter(skill => !skillsSet.has(skill)),
-  //   ];
-  // }, [activeBlockName, allUniqueSkills]);
-
-  const getSkillBlockId = (skillName: string) => `block-${skillName}`;
+  const itemsForActiveBlock = useMemo(() => {
+    return activeBlockName
+      ? SKILLS.filter(item => item.name === activeBlockName).flatMap(item => [
+          ...item.mainSkills,
+          ...item.otherSkills,
+        ])
+      : [];
+  }, [activeBlockName]);
 
   useEffect(() => {
     if (itemsForActiveBlock.length > 0) {
@@ -47,20 +41,51 @@ export default function OuterCircle() {
         otherSkills: [],
       });
     }
-  }, [activeBlockName]);
+  }, [activeBlockName, itemsForActiveBlock]);
+
+  // const sortedSkills = useMemo(() => {
+  //   // Удалить дубликаты скиллов из allUniqueSkills
+  //   const filteredSkills = allUniqueSkills.filter(
+  //     skill => !itemsForActiveBlock.includes(skill),
+  //   );
+
+  //   const insertIndex = names.findIndex(name => name === activeBlockName);
+
+  //   let percentage = 0;
+  //   if (insertIndex === -1) {
+  //     percentage = 0;
+  //   } else {
+  //     percentage = Math.ceil((insertIndex / allUniqueSkills.length - 1) * 100);
+  //   }
+
+  //   return [
+  //     ...filteredSkills.slice(0, percentage),
+  //     ...itemsForActiveBlock,
+  //     ...filteredSkills.slice(percentage),
+  //   ];
+  // }, [activeBlockName, allUniqueSkills, itemsForActiveBlock, names]);
+
+  const getSkillBlockId = (skillName: string) => `block-${skillName}`;
+
+  console.log(block);
+  console.log(itemsForActiveBlock);
+
+  const renderLines = () => {
+    return itemsForActiveBlock.map(skill => (
+      <Line
+        key={skill}
+        id2={getSkillBlockId(skill)}
+        id1={getSkillBlockId(activeBlockName)}
+      />
+    ));
+  };
 
   return (
     <>
       <CircleLayout items={allUniqueSkills}>
         <InnerCircle />
       </CircleLayout>
-      {itemsForActiveBlock.map(skill => (
-        <Line
-          key={skill}
-          id2={getSkillBlockId(skill)}
-          id1={getSkillBlockId(activeBlockName)}
-        />
-      ))}
+      {block.mainSkills && renderLines()}
     </>
   );
 }

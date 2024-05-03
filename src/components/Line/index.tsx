@@ -34,7 +34,7 @@ export default function Line({ id1, id2 }: { id1: string; id2: string }) {
     >
       <path
         d={`M ${line.x1},${line.y1} Q ${(line.x1 + line.x2) / 2},${line.y1} ${(line.x1 + line.x2) / 2},${(line.y1 + line.y2) / 2} T ${line.x2},${line.y2}`}
-        stroke="hsla(5, 100%, 84%, 1)"
+        stroke="hsla(29, 100%, 50%, 1)"
         fill="transparent"
         strokeWidth="2"
       >
