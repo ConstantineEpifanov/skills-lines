@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
-export default function drawLineBetweenBlocks(
-  block1: HTMLDivElement,
-  block2: HTMLDivElement,
-) {
+interface LineProps {
+  block1: HTMLDivElement;
+  block2: HTMLDivElement;
+}
+
+export default function Line({ block1, block2 }: LineProps) {
   const [line, setLine] = useState({ x1: 0, y1: 0, x2: 0, y2: 0 });
 
   useEffect(() => {
