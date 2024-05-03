@@ -53,9 +53,9 @@ $green: hsla(162, 100%, 32%, 1);
 
 .text {
   margin: 0;
-  padding: 8px 3px;
+  padding: 8px;
   border: 1px solid transparent;
-  border-radius: 6px;
+
   box-sizing: border-box;
   display: flex;
   max-width: 80px;
@@ -64,16 +64,20 @@ $green: hsla(162, 100%, 32%, 1);
   &:hover,
   .block:hover & {
     border: 1px solid hsla(0, 0%, 96%, 1);
+    border-radius: 6px;
+  }
 
-    &::before {
-      content: '';
-      backdrop-filter: blur(10px);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
+  &:hover::before,
+  .block_active &::before {
+    content: '';
+    backdrop-filter: blur(30px);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 6px;
   }
 }

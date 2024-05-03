@@ -1,8 +1,12 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { SKILLS } from '../../vendors/constants';
 
-const initialState = {
+type InitialState = (typeof SKILLS)[0];
+
+const initialState: InitialState = {
   name: '',
+  mainSkills: [],
+  otherSkills: [],
 };
 
 export const blockSlice = createSlice({
@@ -11,6 +15,10 @@ export const blockSlice = createSlice({
   reducers: {
     setName: (state, action) => {
       state.name = action.payload;
+    },
+    setActiveChildren: (state, action) => {
+      state.mainSkills = action.payload.main;
+      state.otherSkills = action.payload.other;
     },
   },
 });

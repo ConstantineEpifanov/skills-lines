@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
+import { SKILLS } from '../../vendors/constants';
 
 export default function CircleItem({
   step,
@@ -18,7 +19,8 @@ export default function CircleItem({
   text: string;
   radius: number;
 }) {
-  const { setName } = useActions();
+  const { setName, setActiveChildren } = useActions();
+
   const { name } = useAppSelector(state => state.block);
 
   const [active, setActive] = React.useState(() => name === text);
@@ -47,6 +49,10 @@ export default function CircleItem({
 
   function handleClick() {
     setName(text);
+
+    setActiveChildren(
+      SKILLS.filter(item => item.name === text).map(item => item),
+    );
   }
 
   useEffect(() => {
@@ -59,6 +65,7 @@ export default function CircleItem({
       style={blockStyle}
       data-tag={active ? 'green' : blockColor}
       onClick={handleClick}
+      id={`block-${text}`}
     >
       <p
         className={styles.text}
