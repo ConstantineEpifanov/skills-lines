@@ -46,6 +46,7 @@ export default function CircleItem({
     left: '50%',
     top: '50%',
     transform: `translate(${offsetX}px, ${offsetY}px) translate(-50%, -50%)`,
+    color: chosen || active ? 'black' : 'grey',
   };
 
   const defineDataTag = () => {
@@ -60,11 +61,16 @@ export default function CircleItem({
   };
 
   function handleClick() {
-    setName(text);
+    if (SKILLS.filter(item => item.name === text)[0].name === text) {
+      setName(text);
+    }
 
-    setActiveChildren(
-      SKILLS.filter(item => item.name === text).map(item => item),
-    );
+    const skillsForActiveChild = SKILLS.filter(item => item.name === text);
+
+    setActiveChildren({
+      mainSkills: skillsForActiveChild[0].mainSkills,
+      otherSkills: skillsForActiveChild[0].otherSkills,
+    });
   }
 
   useEffect(() => {
@@ -73,7 +79,6 @@ export default function CircleItem({
 
   useEffect(() => {
     if (block.mainSkills?.includes(text) || block.otherSkills?.includes(text)) {
-      console.log(text);
       setChosen(true);
     } else {
       setChosen(false);

@@ -59,11 +59,12 @@ $orange: hsla(29, 100%, 50%, 1);
   margin: 0;
   padding: 8px;
   border: 1px solid transparent;
-
   box-sizing: border-box;
   display: flex;
-  max-width: 80px;
+  max-width: 100px;
   transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover,
   .block:hover & {
