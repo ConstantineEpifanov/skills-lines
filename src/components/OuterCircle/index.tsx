@@ -1,11 +1,13 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { SKILLS } from '../../vendors/constants';
 import CircleLayout from '../CircleLayout';
 import InnerCircle from '../InnerCircle';
 import Line from '../Line';
+import { useActions } from '../../hooks/actions';
 
 export default function OuterCircle() {
+  const { setActiveChildren } = useActions();
   // Cелектор для получения активного блока из состояния
   const activeBlockName = useAppSelector(state => state.block.name);
   const allUniqueSkills = useMemo(
@@ -38,7 +40,14 @@ export default function OuterCircle() {
 
   const getSkillBlockId = (skillName: string) => `block-${skillName}`;
 
-  console.log(itemsForActiveBlock.map(item => getSkillBlockId(item)));
+  useEffect(() => {
+    if (itemsForActiveBlock.length > 0) {
+      setActiveChildren({
+        mainSkills: itemsForActiveBlock,
+        otherSkills: [],
+      });
+    }
+  }, [activeBlockName]);
 
   return (
     <>

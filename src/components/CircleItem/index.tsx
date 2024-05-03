@@ -21,9 +21,10 @@ export default function CircleItem({
 }) {
   const { setName, setActiveChildren } = useActions();
 
-  const { name } = useAppSelector(state => state.block);
+  const block = useAppSelector(state => state.block);
 
-  const [active, setActive] = React.useState(() => name === text);
+  const [active, setActive] = React.useState(() => block.name === text);
+  const [chosen, setChosen] = React.useState(false);
 
   const angleStep = 360 / step; // Шаг угла для каждого блока items.length
   const angle = angleStep * countNumber; // index
@@ -47,6 +48,19 @@ export default function CircleItem({
     transform: `translate(${offsetX}px, ${offsetY}px) translate(-50%, -50%)`,
   };
 
+  const defineDataTag = () => {
+    switch (active || chosen || undefined) {
+      case active && chosen:
+        return 'grey';
+      case active:
+        return 'green';
+      case chosen:
+        return 'peach';
+      default:
+        return blockColor;
+    }
+  };
+
   function handleClick() {
     setName(text);
 
@@ -56,14 +70,20 @@ export default function CircleItem({
   }
 
   useEffect(() => {
-    setActive(name === text);
-  }, [name, text]);
+    setActive(block.name === text);
+  }, [block, text]);
+
+  useEffect(() => {
+    if (block.mainSkills?.includes(text) || block.otherSkills?.includes(text)) {
+      setChosen(true);
+    }
+  }, [text, block]);
 
   return (
     <div
       className={`${styles.block} ${active ? styles.block_active : ''}`}
       style={blockStyle}
-      data-tag={active ? 'green' : blockColor}
+      data-tag={defineDataTag()}
       onClick={handleClick}
       id={`block-${text}`}
     >

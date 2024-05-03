@@ -17,8 +17,8 @@ export const blockSlice = createSlice({
       state.name = action.payload;
     },
     setActiveChildren: (state, action) => {
-      state.mainSkills = action.payload.main;
-      state.otherSkills = action.payload.other;
+      state.mainSkills = action.payload.mainSkills;
+      state.otherSkills = action.payload.otherSkills;
     },
   },
 });
