@@ -1,0 +1,64 @@
+.circleContainer {
+  position: relative;
+
+  border: 3px solid hsla(0, 0%, 68%, 1);
+  border-radius: 50%;
+  margin: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px; /* Ширина блока */
+  height: 30px; /* Высота блока */
+  margin-top: -15px; /* Смещение на половину высоты блока */
+  margin-left: -15px; /* Смещение на половину ширины блока */
+  transform-origin: center center; /* Центр вращения должен быть в центре блока */
+  /* Остальные стили */
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-color: hsla(29, 100%, 84%, 1);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow:
+      0 0 0 5px #fff,
+      0 0 0 6px hsla(29, 100%, 84%, 1);
+  }
+
+  &:active {
+    border: 1px solid currentColor;
+  }
+}
+
+.text {
+  margin: 0;
+  padding: 8px 3px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  max-width: 80px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover,
+  .block:hover & {
+    border: 1px solid hsla(0, 0%, 96%, 1);
+
+    &::before {
+      content: '';
+      backdrop-filter: blur(10px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  }
+}

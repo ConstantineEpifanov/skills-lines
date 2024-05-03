@@ -1,0 +1,15 @@
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "bracketSpacing": true,
+  "tabWidth": 2,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "extends": [
+    "@gravity-ui/eslint-config",
+    "@gravity-ui/eslint-config/prettier"
+  ],
+  "root": true
+}
