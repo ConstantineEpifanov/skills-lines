@@ -13,6 +13,8 @@ export default function OuterCircle() {
     setActiveChildArray(block.parentElement as HTMLDivElement);
   };
 
+  console.log(activeBlock, activeChildArray);
+
   const allUniqueSkills = useMemo(
     () =>
       Array.from(
@@ -22,7 +24,7 @@ export default function OuterCircle() {
           }, [] as string[]),
         ),
       ),
-    [SKILLS],
+    [],
   );
 
   return (

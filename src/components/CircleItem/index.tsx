@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles.module.scss';
+import { useActions } from '../../hooks/actions';
+import { useAppSelector } from '../../hooks/redux';
 
 export default function CircleItem({
   step,
@@ -16,7 +18,10 @@ export default function CircleItem({
   text: string;
   radius: number;
 }) {
-  const [active, setActive] = React.useState(false);
+  const { setName } = useActions();
+  const { name } = useAppSelector(state => state.block);
+
+  const [active, setActive] = React.useState(() => name === text);
 
   const angleStep = 360 / step; // Шаг угла для каждого блока items.length
   const angle = angleStep * countNumber; // index
@@ -41,8 +46,12 @@ export default function CircleItem({
   };
 
   function handleClick() {
-    setActive(prev => !prev);
+    setName(text);
   }
+
+  useEffect(() => {
+    setActive(name === text);
+  }, [name, text]);
 
   return (
     <div
