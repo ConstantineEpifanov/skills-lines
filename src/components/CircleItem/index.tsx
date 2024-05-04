@@ -62,11 +62,12 @@ const CircleItem = memo(
     };
 
     function handleClick() {
-      if (SKILLS.filter(item => item.name === text)[0].name === text) {
+      const skill = SKILLS.find(item => item.name === text);
+      if (skill) {
         setNewBlock({
           name: text,
-          mainSkills: SKILLS.filter(item => item.name === text)[0].mainSkills,
-          otherSkills: SKILLS.filter(item => item.name === text)[0].otherSkills,
+          mainSkills: skill.mainSkills,
+          otherSkills: skill.otherSkills,
         });
       }
     }
