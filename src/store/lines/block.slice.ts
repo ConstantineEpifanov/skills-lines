@@ -13,10 +13,8 @@ export const blockSlice = createSlice({
   name: 'block',
   initialState,
   reducers: {
-    setName: (state, action) => {
-      state.name = action.payload;
-    },
-    setActiveChildren: (state, action) => {
+    setNewBlock(state, action) {
+      state.name = action.payload.name;
       state.mainSkills = action.payload.mainSkills;
       state.otherSkills = action.payload.otherSkills;
     },

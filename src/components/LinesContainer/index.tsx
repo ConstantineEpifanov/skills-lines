@@ -1,28 +1,41 @@
+import React, { memo, useCallback } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import Line from '../Line';
 
-export default function LinesContainer() {
-  const activeBlockName = useAppSelector(state => state.block.name);
+const LinesContainer = memo(() => {
+  const { name, mainSkills, otherSkills } = useAppSelector(
+    state => state.block,
+  );
 
-  const block = useAppSelector(state => state.block);
-  const getSkillBlockId = (skillName: string) => `block-${skillName}`;
+  const getSkillBlockId = useCallback(
+    (skillName: string) => `block-${skillName}`,
+    [],
+  );
 
-  const renderLines = (skillsArray: string[], color?: string) => {
-    return skillsArray.map(skill => (
-      <Line
-        key={skill}
-        id2={getSkillBlockId(skill)}
-        id1={getSkillBlockId(activeBlockName)}
-        color={color}
-      />
-    ));
-  };
+  const renderLines = useCallback(
+    (skillsArray: string[], color?: string) => {
+      if (!skillsArray) {
+        return;
+      }
+
+      return skillsArray.map(skill => (
+        <Line
+          key={skill}
+          id2={getSkillBlockId(skill)}
+          id1={getSkillBlockId(name)}
+          color={color}
+        />
+      ));
+    },
+    [name, getSkillBlockId],
+  );
 
   return (
     <>
-      {' '}
-      {block.mainSkills && renderLines(block.mainSkills)}
-      {block.otherSkills && renderLines(block.otherSkills, 'purple')}
+      {mainSkills && renderLines(mainSkills)}
+      {otherSkills && renderLines(otherSkills, 'purple')}
     </>
   );
-}
+});
+
+export default LinesContainer;

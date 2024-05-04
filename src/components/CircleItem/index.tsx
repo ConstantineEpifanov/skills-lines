@@ -15,12 +15,12 @@ const CircleItem = memo(
   }: {
     step: number;
     countNumber: number;
-    blockColor: string;
+    blockColor?: string;
     blockWidth: number;
     text: string;
     radius: number;
   }) => {
-    const { setName, setActiveChildren } = useActions();
+    const { setNewBlock } = useActions();
 
     const block = useAppSelector(state => state.block);
 
@@ -63,15 +63,12 @@ const CircleItem = memo(
 
     function handleClick() {
       if (SKILLS.filter(item => item.name === text)[0].name === text) {
-        setName(text);
+        setNewBlock({
+          name: text,
+          mainSkills: SKILLS.filter(item => item.name === text)[0].mainSkills,
+          otherSkills: SKILLS.filter(item => item.name === text)[0].otherSkills,
+        });
       }
-
-      const skillsForActiveChild = SKILLS.filter(item => item.name === text);
-
-      setActiveChildren({
-        mainSkills: skillsForActiveChild[0].mainSkills,
-        otherSkills: skillsForActiveChild[0].otherSkills,
-      });
     }
 
     useEffect(() => {

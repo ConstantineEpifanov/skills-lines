@@ -17,7 +17,9 @@ $orange: hsla(29, 100%, 50%, 1);
   border-radius: 50%;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition:
+    box-shadow 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
 
   &[data-tag='peach'] {
     background-color: $peach;
@@ -62,9 +64,9 @@ $orange: hsla(29, 100%, 50%, 1);
   box-sizing: border-box;
   display: flex;
   max-width: 100px;
-  transition: all 0.2s ease-in-out;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: all 0.2s ease-in-out;
 
   &:hover,
   .block:hover & {
@@ -72,11 +74,8 @@ $orange: hsla(29, 100%, 50%, 1);
     border-radius: 6px;
   }
 
-  &:hover::before,
-  .block_active &::before {
+  &::before {
     content: '';
-    backdrop-filter: blur(30px);
-
     position: absolute;
     top: 0;
     left: 0;
@@ -84,5 +83,18 @@ $orange: hsla(29, 100%, 50%, 1);
     height: 100%;
     z-index: -1;
     border-radius: 6px;
+
+    border: 1px solid transparent;
+    transition:
+      backdrop-filter,
+      border-color,
+      0.2s linear;
+  }
+
+  &:hover::before,
+  .block_active.block &::before,
+  .block:hover &::before {
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(0, 0%, 96%, 1);
   }
 }
