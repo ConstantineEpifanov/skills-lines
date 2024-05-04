@@ -26,14 +26,24 @@ export default function OuterCircle() {
       skill =>
         !block.mainSkills.includes(skill) && !block.otherSkills.includes(skill),
     );
-    console.log(filteredSkills);
-    const insertIndex = names.findIndex(name => name === block.name);
+
+    const profIndex = names.findIndex(name => name === block.name);
+    const skillsToRenderLength = allUniqueSkills.length - filteredSkills.length;
+
+    let insertIndex = Math.floor(
+      (allUniqueSkills.length / names.length) * profIndex -
+        skillsToRenderLength / 2,
+    );
+
+    if (insertIndex < 0) {
+      insertIndex = 0;
+    }
 
     return [
-      ...filteredSkills.slice(0, (insertIndex * 4) / 2),
+      ...filteredSkills.slice(0, insertIndex),
       ...block.mainSkills,
       ...block.otherSkills,
-      ...filteredSkills.slice((insertIndex * 4) / 2),
+      ...filteredSkills.slice(insertIndex),
     ];
   }, [block, allUniqueSkills, names]);
 
