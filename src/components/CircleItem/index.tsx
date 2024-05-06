@@ -74,9 +74,6 @@ const CircleItem = memo(
 
     useEffect(() => {
       setActive(block.name === text);
-    }, [block, text]);
-
-    useEffect(() => {
       if (
         block.mainSkills?.includes(text) ||
         block.otherSkills?.includes(text)
