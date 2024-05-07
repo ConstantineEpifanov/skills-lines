@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SKILLS } from '../../vendors/constants';
 
-type InitialState = (typeof SKILLS)[0];
+type BlockFilterState = {
+  skillName: string;
+  profName: string;
+  mainSkills: string[];
+  otherSkills: string[];
+  professionArray: string[];
+};
 
-const initialState: InitialState = {
-  name: '',
+const initialState: BlockFilterState = {
+  skillName: '',
+  profName: '',
   mainSkills: [],
   otherSkills: [],
+  professionArray: [],
 };
 
 export const blockSlice = createSlice({
@@ -14,9 +21,7 @@ export const blockSlice = createSlice({
   initialState,
   reducers: {
     setNewBlock(state, action) {
-      state.name = action.payload.name;
-      state.mainSkills = action.payload.mainSkills;
-      state.otherSkills = action.payload.otherSkills;
+      Object.assign(state, action.payload);
     },
   },
 });

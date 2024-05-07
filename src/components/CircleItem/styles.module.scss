@@ -2,16 +2,21 @@ $peach: hsla(29, 100%, 84%, 1);
 $grey: hsla(0, 0%, 68%, 1);
 $green: hsla(162, 100%, 32%, 1);
 $orange: hsla(29, 100%, 50%, 1);
+$blockWidth: 30px;
 
 .block {
   position: absolute;
 
   top: 50%;
   left: 50%;
-  width: 30px; /* Ширина блока */
-  height: 30px; /* Высота блока */
-  margin-top: -15px; /* Смещение на половину высоты блока */
-  margin-left: -15px; /* Смещение на половину ширины блока */
+  width: $blockWidth; /* Ширина блока */
+  height: $blockWidth; /* Высота блока */
+  margin-top: calc(
+    -1 * $blockWidth / 2
+  ); /* Смещение на половину высоты блока */
+  margin-left: calc(
+    -1 * $blockWidth / 2
+  ); /* Смещение на половину ширины блока */
   transform-origin: center center; /* Центр вращения должен быть в центре блока */
   /* Остальные стили */
   border-radius: 50%;
@@ -34,8 +39,7 @@ $orange: hsla(29, 100%, 50%, 1);
     background-color: $orange;
   }
 
-  &:hover,
-  &_active {
+  &:hover:not(.block_active, .block_chosen) {
     &[data-tag='peach'] {
       box-shadow:
         0 0 0 5px #fff,
@@ -46,12 +50,46 @@ $orange: hsla(29, 100%, 50%, 1);
         0 0 0 5px #fff,
         0 0 0 6px $grey;
     }
+  }
+
+  &_active:hover {
     &[data-tag='green'] {
       box-shadow:
         0 0 0 5px #fff,
         0 0 0 6px $green;
     }
+    &[data-tag='orange'] {
+      box-shadow:
+        0 0 0 5px #fff,
+        0 0 0 6px $orange;
+    }
   }
+
+  &_active,
+  &_chosen:hover {
+    &[data-tag='peach'] {
+      background-color: $orange;
+      box-shadow:
+        0 0 0 5px #fff,
+        0 0 0 6px $orange;
+    }
+    &[data-tag='grey'] {
+      background-color: $green;
+      box-shadow:
+        0 0 0 5px #fff,
+        0 0 0 6px $green;
+    }
+  }
+
+  &_chosen {
+    &[data-tag='peach'] {
+      background-color: $orange;
+    }
+    &[data-tag='grey'] {
+      background-color: $green;
+    }
+  }
+
   &:active {
     border-color: white;
   }
@@ -94,7 +132,7 @@ $orange: hsla(29, 100%, 50%, 1);
   &:hover::before,
   .block_active.block &::before,
   .block:hover &::before {
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     border: 1px solid hsla(0, 0%, 96%, 1);
   }
 }

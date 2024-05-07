@@ -1,37 +1,39 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { SKILLS } from '../../vendors/constants';
 import CircleLayout from '../CircleLayout';
 import { useAppSelector } from '../../hooks/redux';
 
+import findAllUniqueSkills from '../../utils/findAllUniqieSkills';
+// import findProfNames from '../../utils/findProfNames';
+import { useActions } from '../../hooks/actions';
+
 export default function OuterCircle() {
   const block = useAppSelector(state => state.block);
-  const allUniqueSkills = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          SKILLS.reduce(
-            (acc, item) => acc.concat(item.mainSkills, item.otherSkills),
-            [] as string[],
-          ),
-        ),
-      ),
-    [],
-  );
-  const names = useMemo(() => SKILLS.map(item => item.name), []);
+  const circles = useAppSelector(state => state.circles);
+  const { setSkillsCircle } = useActions();
+  const allUniqueSkillsArray = useMemo(() => findAllUniqueSkills(), []);
+  // const allProfNames = useMemo(() => findProfNames(), []);
 
   const sortedSkills = useMemo(() => {
-    // Удалить дубликаты скиллов из allUniqueSkills
-    const filteredSkills = allUniqueSkills.filter(
+    const skillsToFilter =
+      circles.skills.length !== 0 ? circles.skills : allUniqueSkillsArray;
+
+    const filteredSkills = skillsToFilter.filter(
       skill =>
-        !block.mainSkills.includes(skill) && !block.otherSkills.includes(skill),
+        !(block.mainSkills && block.mainSkills.includes(skill)) &&
+        block.otherSkills &&
+        !block.otherSkills.includes(skill),
     );
 
-    const profIndex = names.findIndex(name => name === block.name);
-    const skillsToRenderLength = allUniqueSkills.length - filteredSkills.length;
+    const profIndex = circles.professions.findIndex(
+      name => name === block.profName,
+    );
+
+    const skillsToRenderLength =
+      allUniqueSkillsArray.length - filteredSkills.length;
 
     let insertIndex = Math.floor(
-      (allUniqueSkills.length / names.length) * profIndex -
+      (allUniqueSkillsArray.length / circles.professions.length) * profIndex -
         skillsToRenderLength / 2,
     );
 
@@ -41,15 +43,19 @@ export default function OuterCircle() {
 
     return [
       ...filteredSkills.slice(0, insertIndex),
-      ...block.mainSkills,
-      ...block.otherSkills,
+      ...(block.mainSkills ?? []),
+      ...(block.otherSkills ?? []),
       ...filteredSkills.slice(insertIndex),
     ];
-  }, [block, allUniqueSkills, names]);
+  }, [block, allUniqueSkillsArray, circles.professions]);
+
+  useEffect(() => {
+    setSkillsCircle({ skills: sortedSkills });
+  }, [sortedSkills, setSkillsCircle]);
 
   return (
     <>
-      <CircleLayout items={sortedSkills} />
+      <CircleLayout items={circles.skills} />
     </>
   );
 }
