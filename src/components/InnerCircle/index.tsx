@@ -19,14 +19,19 @@ const InnerCircle = memo(() => {
     const skillsToRender =
       professions.length !== 0 ? professions : allProfNames;
     const filteredProfs = skillsToRender.filter(
-      prof => !filteredNames.includes(prof),
+      prof =>
+        !filteredNames.inMain.includes(prof) &&
+        !filteredNames.inOther.includes(prof),
     );
 
     const skillIndex = skills.findIndex(name => name === block.skillName);
 
     let insertIndex = Math.ceil(
       (allProfNames.length / skills.length) * skillIndex -
-        filteredNames.length / 2,
+        Object.values(filteredNames).flatMap(value =>
+          Array.isArray(value) ? value : [value],
+        ).length /
+          2,
     );
     console.log(
       allProfNames.length,
@@ -41,7 +46,8 @@ const InnerCircle = memo(() => {
 
     return [
       ...filteredProfs.slice(0, insertIndex),
-      ...filteredNames,
+      ...filteredNames.inMain,
+      ...filteredNames.inOther,
       ...filteredProfs.slice(insertIndex),
     ];
   }, [allProfNames, allUniqueSkillsArray, block.skillName, filteredNames]);

@@ -5,7 +5,7 @@ type BlockFilterState = {
   profName: string;
   mainSkills: string[];
   otherSkills: string[];
-  professionArray: string[];
+  professionArray: { inMain: string[]; inOther: string[] };
 };
 
 const initialState: BlockFilterState = {
@@ -13,7 +13,7 @@ const initialState: BlockFilterState = {
   profName: '',
   mainSkills: [],
   otherSkills: [],
-  professionArray: [],
+  professionArray: { inMain: [], inOther: [] },
 };
 
 export const blockSlice = createSlice({

@@ -132,7 +132,7 @@ $blockWidth: 30px;
   &:hover::before,
   .block_active.block &::before,
   .block:hover &::before {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
     border: 1px solid hsla(0, 0%, 96%, 1);
   }
 }

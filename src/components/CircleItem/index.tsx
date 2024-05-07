@@ -26,14 +26,13 @@ const CircleItem = ({
   const [active, setActive] = React.useState(false);
   const [chosen, setChosen] = React.useState(false);
 
-  // const [dataTag, setDataTag] = React.useState(() => defineDataTag());
-
   useEffect(() => {
     setActive(block.profName === text || block.skillName === text);
     setChosen(
       block.mainSkills?.includes(text) ||
         block.otherSkills?.includes(text) ||
-        block.professionArray?.includes(text) ||
+        block.professionArray?.inMain.includes(text) ||
+        block.professionArray?.inOther.includes(text) ||
         false,
     );
   }, [
@@ -44,10 +43,6 @@ const CircleItem = ({
     block.otherSkills,
     block.professionArray,
   ]);
-
-  // useEffect(() => {
-  //   setDataTag(blockColor);
-  // }, [active, chosen]);
 
   const angleStep = 360 / step; // Шаг угла для каждого блока items.length
   const angle = angleStep * countNumber; // index
@@ -72,16 +67,28 @@ const CircleItem = ({
     color: chosen || active ? 'black' : 'grey',
   };
 
-  // function defineDataTag() {
-  //   switch (active || chosen || undefined) {
-  //     case active:
-  //       return 'green';
-  //     case chosen:
-  //       return 'orange';
-  //     default:
-  //       return blockColor;
-  //   }
-  // }
+  function handleSetProfBlock(text: string): {
+    inMain: string[];
+    inOther: string[];
+  } {
+    const result: {
+      inMain: string[];
+      inOther: string[];
+    } = {
+      inMain: [],
+      inOther: [],
+    };
+
+    SKILLS.filter(item => {
+      if (item.mainSkills?.includes(text)) {
+        result.inMain.push(item.name);
+      }
+      if (item.otherSkills?.includes(text)) {
+        result.inOther.push(item.name);
+      }
+    });
+    return result;
+  }
 
   function handleClick() {
     const profession = SKILLS.find(item => item.name === text);
@@ -93,7 +100,10 @@ const CircleItem = ({
         profName: text,
         mainSkills: profession.mainSkills,
         otherSkills: profession.otherSkills,
-        professionArray: [],
+        professionArray: {
+          inMain: [],
+          inOther: [],
+        },
         skillName: '',
       });
     }
@@ -103,10 +113,7 @@ const CircleItem = ({
         mainSkills: [],
         otherSkills: [],
         skillName: text,
-        professionArray: SKILLS.filter(
-          item =>
-            item.mainSkills.includes(text) || item.otherSkills.includes(text),
-        ).map(item => item.name),
+        professionArray: handleSetProfBlock(text),
       });
     }
   }
@@ -116,7 +123,9 @@ const CircleItem = ({
     setChosen(
       block.mainSkills?.includes(text) ||
         block.otherSkills?.includes(text) ||
-        block.professionArray?.includes(text),
+        block.professionArray?.inMain.includes(text) ||
+        block.professionArray?.inOther.includes(text) ||
+        false,
     );
   }, [text, block]);
 

@@ -45,7 +45,12 @@ const LinesContainer = () => {
     <>
       {mainSkills && profName && renderLines(mainSkills, profName)}
       {otherSkills && profName && renderLines(otherSkills, profName, 'purple')}
-      {professionArray && skillName && renderLines(professionArray, skillName)}
+      {professionArray &&
+        skillName &&
+        renderLines(professionArray.inMain, skillName)}
+      {professionArray &&
+        skillName &&
+        renderLines(professionArray.inOther, skillName, 'purple')}
     </>
   );
 };
