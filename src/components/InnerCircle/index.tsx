@@ -2,7 +2,7 @@ import { memo, useEffect, useMemo } from 'react';
 
 import CircleLayout from '../CircleLayout';
 import { useAppSelector } from '../../hooks/redux';
-import findAllUniqueSkills from '../../utils/findAllUniqieSkills';
+
 import findProfNames from '../../utils/findProfNames';
 import { useActions } from '../../hooks/actions';
 
@@ -10,15 +10,14 @@ const InnerCircle = memo(() => {
   const block = useAppSelector(state => state.block);
   const { skills, professions } = useAppSelector(state => state.circles);
   const { setProfessionCircle } = useActions();
-  const allUniqueSkillsArray = useMemo(() => findAllUniqueSkills(), []);
+
   const allProfNames = useMemo(() => findProfNames(), []);
 
   const filteredNames = useAppSelector(state => state.block?.professionArray);
 
   const sortedProfs = useMemo(() => {
-    const skillsToRender =
-      professions.length !== 0 ? professions : allProfNames;
-    const filteredProfs = skillsToRender.filter(
+    const profsToRender = professions.length !== 0 ? professions : allProfNames;
+    const filteredProfs = profsToRender.filter(
       prof =>
         !filteredNames.inMain.includes(prof) &&
         !filteredNames.inOther.includes(prof),
@@ -27,17 +26,11 @@ const InnerCircle = memo(() => {
     const skillIndex = skills.findIndex(name => name === block.skillName);
 
     let insertIndex = Math.ceil(
-      (allProfNames.length / skills.length) * skillIndex -
+      (profsToRender.length / skills.length) * skillIndex -
         Object.values(filteredNames).flatMap(value =>
           Array.isArray(value) ? value : [value],
         ).length /
           2,
-    );
-    console.log(
-      allProfNames.length,
-      allUniqueSkillsArray.length,
-      skillIndex,
-      insertIndex,
     );
 
     if (insertIndex < 0) {
@@ -50,7 +43,7 @@ const InnerCircle = memo(() => {
       ...filteredNames.inOther,
       ...filteredProfs.slice(insertIndex),
     ];
-  }, [allProfNames, allUniqueSkillsArray, block.skillName, filteredNames]);
+  }, [block.skillName, filteredNames]);
 
   useEffect(() => {
     setProfessionCircle({ professions: sortedProfs });

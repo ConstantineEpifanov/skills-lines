@@ -6,19 +6,13 @@ $blockWidth: 30px;
 
 .block {
   position: absolute;
-
   top: 50%;
   left: 50%;
-  width: $blockWidth; /* Ширина блока */
-  height: $blockWidth; /* Высота блока */
-  margin-top: calc(
-    -1 * $blockWidth / 2
-  ); /* Смещение на половину высоты блока */
-  margin-left: calc(
-    -1 * $blockWidth / 2
-  ); /* Смещение на половину ширины блока */
-  transform-origin: center center; /* Центр вращения должен быть в центре блока */
-  /* Остальные стили */
+  width: $blockWidth;
+  height: $blockWidth;
+  margin-top: calc(-1 * $blockWidth / 2);
+  margin-left: calc(-1 * $blockWidth / 2);
+  transform-origin: center center;
   border-radius: 50%;
   border: 1px solid transparent;
   cursor: pointer;
@@ -37,32 +31,6 @@ $blockWidth: 30px;
   }
   &[data-tag='orange'] {
     background-color: $orange;
-  }
-
-  &:hover:not(.block_active, .block_chosen) {
-    &[data-tag='peach'] {
-      box-shadow:
-        0 0 0 5px #fff,
-        0 0 0 6px $peach;
-    }
-    &[data-tag='grey'] {
-      box-shadow:
-        0 0 0 5px #fff,
-        0 0 0 6px $grey;
-    }
-  }
-
-  &_active:hover {
-    &[data-tag='green'] {
-      box-shadow:
-        0 0 0 5px #fff,
-        0 0 0 6px $green;
-    }
-    &[data-tag='orange'] {
-      box-shadow:
-        0 0 0 5px #fff,
-        0 0 0 6px $orange;
-    }
   }
 
   &_active,
@@ -93,6 +61,34 @@ $blockWidth: 30px;
   &:active {
     border-color: white;
   }
+
+  @media (hover: hover) {
+    &:hover:not(.block_active, .block_chosen) {
+      &[data-tag='peach'] {
+        box-shadow:
+          0 0 0 5px #fff,
+          0 0 0 6px $peach;
+      }
+      &[data-tag='grey'] {
+        box-shadow:
+          0 0 0 5px #fff,
+          0 0 0 6px $grey;
+      }
+    }
+
+    &_active:hover {
+      &[data-tag='green'] {
+        box-shadow:
+          0 0 0 5px #fff,
+          0 0 0 6px $green;
+      }
+      &[data-tag='orange'] {
+        box-shadow:
+          0 0 0 5px #fff,
+          0 0 0 6px $orange;
+      }
+    }
+  }
 }
 
 .text {
@@ -106,10 +102,12 @@ $blockWidth: 30px;
   text-overflow: ellipsis;
   transition: all 0.2s ease-in-out;
 
-  &:hover,
-  .block:hover & {
-    border: 1px solid hsla(0, 0%, 96%, 1);
-    border-radius: 6px;
+  @media (hover: hover) {
+    &:hover,
+    .block:hover & {
+      border: 1px solid hsla(0, 0%, 96%, 1);
+      border-radius: 6px;
+    }
   }
 
   &::before {

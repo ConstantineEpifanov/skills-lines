@@ -4,7 +4,7 @@ import CircleLayout from '../CircleLayout';
 import { useAppSelector } from '../../hooks/redux';
 
 import findAllUniqueSkills from '../../utils/findAllUniqieSkills';
-// import findProfNames from '../../utils/findProfNames';
+
 import { useActions } from '../../hooks/actions';
 
 export default function OuterCircle() {
@@ -12,7 +12,6 @@ export default function OuterCircle() {
   const circles = useAppSelector(state => state.circles);
   const { setSkillsCircle } = useActions();
   const allUniqueSkillsArray = useMemo(() => findAllUniqueSkills(), []);
-  // const allProfNames = useMemo(() => findProfNames(), []);
 
   const sortedSkills = useMemo(() => {
     const skillsToFilter =
@@ -29,11 +28,10 @@ export default function OuterCircle() {
       name => name === block.profName,
     );
 
-    const skillsToRenderLength =
-      allUniqueSkillsArray.length - filteredSkills.length;
+    const skillsToRenderLength = skillsToFilter.length - filteredSkills.length;
 
     let insertIndex = Math.floor(
-      (allUniqueSkillsArray.length / circles.professions.length) * profIndex -
+      (skillsToFilter.length / circles.professions.length) * profIndex -
         skillsToRenderLength / 2,
     );
 

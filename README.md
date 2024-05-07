@@ -9,9 +9,15 @@
 
 [Макет в фигме](https://www.figma.com/file/b6Vi2BgPs9VpaRp0NJ1RUw/chart-task-design?type=design&node-id=0%3A1&mode=design&t=YcwyItVfKIIvmPaN-1)
 
-## Дополнительно 
+## Стек
 
-1. В процессе реализация возможности выбора навыка, и отображения всех связанных с ним компетенций.
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" height="30"/><img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" height="30"/><img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="sass" height="30"/><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" height="30"/><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="react" height="30"/><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Redux" height="30"/>
+
+<img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" height="30"/><img src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white" alt="eslint" height="30"/><img src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E" alt="prettier" height="30"/>
+
+## Дополнительно
+
+1. Реализована возможность выбора навыка, и отображения всех связанных с ним компетенций.
 2. При выборе компетенции, соответствующие навыки располагаются как можно ближе, чтобы исключить длинные пересекающиеся между собой линии.
 3. Реализовал анимацию плавной отрисовки соединительных линий
 4. Добавил анимации на hover
@@ -21,6 +27,7 @@
 [Сайт на Vercel](https://skills-lines.vercel.app/)
 
 ## Данные
+
 ```
 [
   {
